@@ -1,0 +1,54 @@
+doctype 5
+html
+  head
+    title Git-Backups
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    script(src="/javascripts/jquery-1.8.2.min.js")
+    script(src="/bootstrap/js/bootstrap.js")
+    script(src="/socket.io/socket.io.js")
+
+  body
+    div(class="navbar navbar-fixed-bottom")
+      div(class="navbar-inner")
+        div(class="container", style="width: auto; padding: 0 20px;")
+          a(class="brand", href="/") GitBackups
+          ul(class="nav pull-right") 
+            li 
+              a Monitor: 
+                span(id="monitorStatus", class="badge badge-success") Online
+    div(class="container-fluid")
+      block content
+
+    script
+
+      function monitorOK() {
+        $("#monitorStatus").attr('class', 'badge badge-success').text('Online');
+      }
+
+      function monitorWarn() {
+        $("#monitorStatus").attr('class', 'badge badge-warning').text('Server uncontactable');
+      }
+
+      function monitorErr() {
+        $("#monitorStatus").attr('class', 'badge badge-important').text('Offline');
+      }
+
+      var socket = io.connect('/');
+
+      socket.on('monitor-heartbeat', function (data) {
+        if(data.status === "UP"){
+          monitorOK();
+        }else{
+          monitorErr();
+        };
+      });
+
+      socket.emit('monitor-status', function(data){
+        //console.log(data);
+      });
+
+      socket.on('disconnect', function(){
+        monitorWarn();
+      });
+
+

@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  - if (locals.saveError)
+    div(class="alert alert-block alert-error") 
+      h4 Error saving project
+      p #{saveError}
+
+  div(class="row-fluid")
+
+    div(class="page-header span8")
+      h1 Add a new Repository
+        br
+        small 
+
+    div(class="span4")
+      div(class="well", style="margin-top:20px;")
+        p :defaults:
+
+  form(class="form-horizontal", method="POST", action="/add")
+    legend Repository information
+    div(class="control-group")
+      label(class="control-label", for="repoName") Name
+      div(class="controls")
+        input(type="text", id="repoName", name="repoName", placeholder="Repository name")
+
+    div(class="control-group")
+      label(class="control-label", for="repoURI") URI
+      div(class="controls")
+        input(type="text", id="repoURI", name="repoURI", placeholder="Repository URI")
+
+    div(class="control-group")
+      div(class="controls")
+        button(type="submit", class="btn") Add repository

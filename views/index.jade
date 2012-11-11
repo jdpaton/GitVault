@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  div(class="row-fluid")
+
+    div(class="page-header span8")
+      h1 Git Backup Server
+        br
+        small  #{projects.length} projects backed up
+
+    div(class="span4")
+      div(class="well", style="margin-top:20px;")
+        a(href="/add",class="btn") 
+          i(class="icon-plus-sign") 
+          |  Backup a new repository
+        a(href="/admin",class="btn") 
+          i(class="icon-wrench")
+          |  Administration
+
+
+  table(class="table table-bordered")
+    thead
+      tr
+        th Repository
+        th URL
+        th Last backup
+        th status
+    tbody
+      for project in projects
+        tr
+          td 
+            a(href="/view/project/#{project.id}") #{project.name}
+          td #{project.URI}
+          td 
+            - if (project.lastBackup)
+              | #{project.lastBackup}
+            - else
+              span(class="badge badge-warning") Unknown
+          td 
+            - if (project.currentStatus == 0)
+              span(class="badge badge-success")  OK
+            - else if (project.currentStatus == 1)
+              span(class="badge badge-important") FAILED
+            - else
+              span(class="badge badge-warning")  Unknown

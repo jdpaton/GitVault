@@ -1,0 +1,58 @@
+extends layout
+
+block content
+  div(class="row-fluid")
+
+    div(class="page-header span8")
+      h1 #{project.name}
+        br
+        small #{project.URI}
+
+    div(class="span4")
+      div(class="well", style="margin-top:20px;")
+        a(class="btn", href="/")
+          i(class="icon-chevron-left")
+          | Back to projects
+        a(class="btn btn-danger", href="#deleteModal", data-toggle="modal", role="button", style="margin-left:5px")
+          i(class="icon-remove-sign icon-white") 
+          | Delete project
+        br
+        br
+
+      div(class="well", style="margin-top:20px;")
+        | Permalink: 
+        input(id="bundle-link", style="margin-right: 5px")
+        a(class="btn btn-primary", href="/dl/bundle/#{project.id}") Download
+
+  div(class="row-fluid")
+    h3 Last backup
+    | #{project.lastBackup}
+    h3 Number of Failures:
+    | #{project.backupFailures}
+
+
+    div(class="modal hide", id="deleteModal", tabindex="-1", role="dialog", aria-labelledby="deleteModalLabel", aria-hidden="true")
+      div(class="modal-header")
+        button(type="button", class="close", data-dismiss="modal", aria-hidden="true")
+        h3(id="deleteModalLabel") Delete Project
+      div(class="modal-body")
+        p Really delete project "#{project.name}"?
+      div(class="modal-footer")
+        button(class="btn", data-dismiss="modal", aria-hidden="true") Close
+        button(class="btn btn-primary", id="#{project.id}--delete") Delete
+
+  script
+    var projectID = "#{project.id}";
+    var bundleURI = location.protocol+'//' + location.host + '/dl/bundle/' + projectID;
+
+    $('#bundle-link').val(bundleURI);
+
+    $('##{project.id}--delete').click(function(){
+      $.getJSON('/delete/project/#{project.id}', function(data){
+        if(data.status === 0){
+          window.location = "/";
+        }else{
+          alert('ERROR deleting project, code: ' + data.status);
+        }
+      });
+    });
