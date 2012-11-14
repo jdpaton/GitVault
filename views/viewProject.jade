@@ -14,21 +14,27 @@ block content
           i(class="icon-chevron-left")
           | Back to projects
         a(class="btn btn-danger", href="#deleteModal", data-toggle="modal", role="button", style="margin-left:5px")
-          i(class="icon-remove-sign icon-white") 
+          i(class="icon-remove-sign icon-white")
           | Delete project
         br
         br
 
       div(class="well", style="margin-top:20px;")
-        | Permalink: 
+        | Permalink:
         input(id="bundle-link", style="margin-right: 5px")
         a(class="btn btn-primary", href="/dl/bundle/#{project.id}") Download
 
   div(class="row-fluid")
-    h3 Last backup
-    | #{project.lastBackup}
-    h3 Number of Failures:
-    | #{project.backupFailures}
+    div(class="span8")
+
+      h5 Latest Commit
+      |!{project.lastLog}
+
+    div(class="span4")
+      h4 Number of Failures:
+      | #{project.backupFailures}
+      h4 Last backup
+      | #{project.lastBackup}
 
 
     div(class="modal hide", id="deleteModal", tabindex="-1", role="dialog", aria-labelledby="deleteModalLabel", aria-hidden="true")
