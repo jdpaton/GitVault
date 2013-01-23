@@ -8,6 +8,10 @@
   "dependencies": {
     "express": "3.0.0",
     "jade": "*",
-    "stylus": "*"
+    "mongoose": "*",
+    "shelljs": "*",
+    "socket.io": "*",
+    "stylus": "*",
+    "sugar": "*"
   }
 }
