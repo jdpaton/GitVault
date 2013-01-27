@@ -37,7 +37,7 @@ app.get('/delete/project/:id', routes.delete);
 app.get('/dl/bundle/:id', routes.getBundle);
 
 server = http.createServer(app).listen(app.get('port'), function(){
-  console.log("Github backup server running on port " + app.get('port'));
+  console.log("Gitvault web interface running on port " + app.get('port'));
 });
 
 // Websocket server
