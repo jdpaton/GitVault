@@ -18,7 +18,6 @@ passport.use(new GoogleStrategy({
     realm: 'http://' + conf.get('domain') + ':' + conf.get('port')
   },
   function(identifier, profile, done) {
-      console.log(profile, identifier);
       done(null, 1);
   }
 ));

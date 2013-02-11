@@ -35,6 +35,10 @@ block content
       | #{project.failedBackups}
       h4 Last backup
       | #{project.lastBackup}
+      - if(project.errorLog)
+        h4 Error log
+        | #{project.errorLog}
+
 
     div(class="modal hide", id="deleteModal", tabindex="-1", role="dialog", aria-labelledby="deleteModalLabel", aria-hidden="true")
       div(class="modal-header")
