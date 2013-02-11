@@ -54,9 +54,9 @@ exports.delete = function(req, res){
 }
 
 exports.getBundle = function(req, res){
-
-  models.Project.findOne({_id: req.params.id}, function(err, project) {
-   res.sendfile(project.bundlePath);
+  var Project = new models.Project();
+  Project.get(req.params.id, function(err, project) {
+    res.sendfile(project.bundlePath);
   });
 
 }
