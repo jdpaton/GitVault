@@ -13,6 +13,10 @@ var express = require('express')
   , GoogleStrategy = require('passport-google').Strategy
   , Jobs = require('./lib/jobs');
 
+
+/**
+ * Passport Auth Strategy
+ */
 passport.use(new GoogleStrategy({
     returnURL: 'http://' + conf.get('domain') + ':' + conf.get('port') + '/auth/google/return',
     realm: 'http://' + conf.get('domain') + ':' + conf.get('port')
@@ -31,6 +35,9 @@ passport.deserializeUser(function(obj, done) {
 });
 
 
+/**
+ * Express JS setup
+ */
 var app = express();
 
 app.configure(function(){
@@ -54,6 +61,10 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+
+/**
+ * Define routes
+ */
 app.get('/', routes.index);
 app.get('/add', routes.add);
 app.post('/add', routes.add);
@@ -67,16 +78,24 @@ app.get('/auth/google/return',
   passport.authenticate('google', { successRedirect: '/',
                                     failureRedirect: '/login' }));
 
+/**
+ * Auth Helpers
+ */
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
       res.redirect('/auth/google')
 }
 
+/**
+ * Start the HTTP server
+ */
 server = http.createServer(app).listen(app.get('port'), function(){
   console.log("Gitvault web interface running on port " + app.get('port'));
 });
 
-// Websocket server
+/**
+ * Start the websocket server
+ */
 io = require('socket.io').listen(server);
 io.set('log level', 1);
 
@@ -89,7 +108,9 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
-// Background job processor
+/**
+ *  Start the background job processor
+ */
 var jobs = new Jobs();
 jobs.start();
 
