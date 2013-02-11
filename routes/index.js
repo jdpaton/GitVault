@@ -5,6 +5,7 @@ models = require('../lib/models');
  */
 
 exports.index = function(req, res){
+  console.log(req.isAuthenticated());
   var Project = new models.Project();
   Project.getEnabled(function(err, projects){
     res.render('index', { projects_total: "1,004343", projects: projects} )

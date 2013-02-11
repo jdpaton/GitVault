@@ -1,0 +1,7 @@
+{
+  "webui_port": 3000,
+  "repo_dir": "/tmp/gitvault",
+  "job_interval": 30,
+  "domain": "localhost",
+  "session_key": "gitvault"
+}

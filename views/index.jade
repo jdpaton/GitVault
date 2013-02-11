@@ -10,10 +10,10 @@ block content
 
     div(class="span4")
       div(class="well", style="margin-top:20px;")
-        a(href="/add",class="btn") 
-          i(class="icon-plus-sign") 
+        a(href="/add",class="btn")
+          i(class="icon-plus-sign")
           |  Backup a new repository
-        a(href="/admin",class="btn") 
+        a(href="/admin",class="btn")
           i(class="icon-wrench")
           |  Administration
 
@@ -28,15 +28,15 @@ block content
     tbody
       for project in projects
         tr
-          td 
+          td
             a(href="/view/project/#{project.id}") #{project.name}
           td #{project.URI}
-          td 
+          td
             - if (project.lastBackup)
               | #{project.lastBackup}
             - else
               span(class="badge badge-warning") Unknown
-          td 
+          td
             - if (project.currentStatus == 0)
               span(class="badge badge-success")  OK
             - else if (project.currentStatus == 1)
