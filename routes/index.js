@@ -5,7 +5,8 @@ models = require('../lib/models');
  */
 
 exports.index = function(req, res){
-  models.Project.find(function(err, projects){
+  var Project = new models.Project();
+  Project.getEnabled(function(err, projects){
     res.render('index', { projects_total: "1,004343", projects: projects} )
   });
 };
@@ -14,14 +15,14 @@ exports.add = function(req, res){
   if(req.method == "GET"){
     res.render('addProject', {});
   }else if(req.method == "POST"){
-    project = new models.Project();
+    var project = new models.Project();
     project.name = req.body.repoName;
     project.URI = req.body.repoURI;
     project.save(function(err) {
       if(err){
         res.render('addProject', { saveError: err});
       }else{
-        models.Project.find(function(err, projects){
+        project.getEnabled(function(err, projects){
           res.render('index', {projects: projects, projects_total: "+1"});
         });
       }
@@ -30,21 +31,22 @@ exports.add = function(req, res){
 }
 
 exports.view = function(req, res){
+  var Project = new models.Project();
   if(req.params.id){
-    models.Project.findOne({_id: req.params.id}, function(err, project) {
+    Project.get(req.params.id, function(err, project) {
       res.render('viewProject', {project: project});
     });
   }
 }
 
 exports.delete = function(req, res){
+  var Project = new models.Project();
   if(req.params.id){
-    models.Project.remove({_id: req.params.id}, function(err) {
-      var code;
-      if(err) {
-        code = 1;
-      }else{
+  Project.delete(req.params.id, function(result) {
+      if(result.deleted > 0) {
         code = 0;
+      }else{
+        code = 1;
       }
       res.json({status: code});
     });
