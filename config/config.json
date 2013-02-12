@@ -3,5 +3,9 @@
   "repo_dir": "/tmp/gitvault",
   "job_interval": 30,
   "domain": "localhost",
-  "session_key": "gitvault"
+  "session_key": "gitvault",
+  "smtp_default_recipient": "jamie.paton@googlemail.com",
+  "smtp_service": "Gmail",
+  "smtp_user": "jamie.paton@googlemail.com",
+  "smtp_pass": ""
 }
