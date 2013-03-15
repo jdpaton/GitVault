@@ -4,6 +4,7 @@
  */
 
 var express = require('express')
+  , Resource = require('express-resource')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path')

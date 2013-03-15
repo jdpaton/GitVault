@@ -5,7 +5,6 @@ models = require('../lib/models');
  */
 
 exports.index = function(req, res){
-  console.log(req.isAuthenticated());
   var Project = new models.Project();
   Project.getEnabled(function(err, projects){
     res.render('index', { projects_total: "1,004343", projects: projects} )
@@ -43,13 +42,8 @@ exports.view = function(req, res){
 exports.delete = function(req, res){
   var Project = new models.Project();
   if(req.params.id){
-  Project.delete(req.params.id, function(result) {
-      if(result.deleted > 0) {
-        code = 0;
-      }else{
-        code = 1;
-      }
-      res.json({status: code});
+  Project.delete(req.params.id, function(err, result) {
+      res.json({status: err});
     });
   }
 }
